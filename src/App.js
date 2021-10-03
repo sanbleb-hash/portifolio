@@ -9,7 +9,7 @@ import NotfoundPage from './NotfoundPage';
 function App() {
 	return (
 		<Router>
-			<main className=' w-screen bg-gray-100 text-red-400 font-genumu'>
+			<main className=' w-screen bg-gray-100 text-blue-800 font-genumu'>
 				<NavBar />
 				<Switch>
 					<Route path='/' exact>

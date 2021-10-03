@@ -25,8 +25,9 @@ const HomePage = () => {
 					</h2>
 				</article>
 			</section>
-
-			<About />
+			<section className='mt-80 md:mt-0'>
+				<About />
+			</section>
 		</main>
 	);
 };
