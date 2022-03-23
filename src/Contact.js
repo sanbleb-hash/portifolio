@@ -1,63 +1,92 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
-export default function Contact() {
-	const [value, setValue] = useState(false);
+import { toast } from 'react-toastify';
 
-	const handleSubmit = (e) => {
+import { useNavigate } from 'react-router-dom';
+
+const Contact = () => {
+	const router = useNavigate();
+	const [email, setEmail] = useState('');
+	const [loading, setLoading] = useState(false);
+	const form = useRef();
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setValue(true);
+		if (form.current === '') {
+			toast.error('pliz fill all fields');
+			return;
+		}
+		const clearForm = (e) => {
+			form.current = '';
+		};
+		setLoading(true);
+
+		emailjs
+			.sendForm(
+				'service_gqjjyow',
+				'template_m1paocj',
+				form.current,
+
+				'user_G7opxnY8fCjEMJBR8FhIB'
+			)
+			.then(
+				(result) => {
+					setLoading(false);
+					toast.success(result.text);
+				},
+				(error) => {
+					toast.error(error.text);
+				}
+			);
+		clearForm();
+		setTimeout(() => {
+			router.push('/thank-you');
+		}, 5000);
 	};
+
 	return (
-		<section className='bg-indigo-200 bg-cover object-fill w-screen h-[70vh] relative   z-0'>
-			{/* <div className='before:bg-blue-400/60 w-900/50 before:absolute before:left-0 before:top-0 before:right-0 before:-bottom-10 before:z-1'></div> */}
-			<form
-				className='z-[100] min-h-[50vh] w-[50vw] mx-auto mt-8 px-6  py-8 mb-10 flex flex-col  border border-indigo-400  '
-				onSubmit={handleSubmit}
-			>
-				{value ? (
-					<span className='text-green-600 text-sm'>
-						{' '}
-						thanks for contacting us will reply ASAP{' '}
-					</span>
-				) : (
-					''
-				)}
-				<div className=' flex flex-col'>
-					<label className='italic font-bold text-xl capitalize'>name</label>
+		<div className='pt-14 flex flex-col items-center  justify-center min-h-[80vh]  '>
+			<form ref={form} className='min-w-[300px]' onSubmit={handleSubmit}>
+				<div className=' flex-col flex justfy-start text-gray-700'>
+					<label>Name</label>
 					<input
-						onChange={(e) => setValue(e.target.value)}
-						placeholder='enter your name'
+						className=' shadow-lg bg-gray-100 ring-0 border-0 rounded-lg focus:ring-0 focus:border-0 '
 						type='text'
-						className='px-4 py-2 focus:outline-none'
+						name='user_name'
 					/>
 				</div>
-				<div className=' flex flex-col'>
-					<label className='italic font-bold text-xl capitalize'>email</label>
+				<div className=' flex-col flex justfy-start text-gray-700'>
+					<label>subject</label>
 					<input
-						onChange={(e) => setValue(e.target.value)}
-						placeholder='enter email'
+						className=' shadow-lg bg-gray-100 ring-0 border-0 rounded-lg focus:ring-0 focus:border-0 '
+						type='text'
+						name='user_subject'
+					/>
+				</div>
+				<div className='  flex-col flex justfy-start text-gray-700'>
+					<label>Email</label>
+					<input
+						className=' shadow-lg bg-gray-100 ring-0 border-0 rounded-lg focus:ring-0 focus:border-0 '
 						type='email'
-						className='px-4 py-2 focus:outline-none'
+						name='user_email'
 					/>
 				</div>
-				<div className='flex items-end justify-between flex-col md:flex-row'>
+				<div className=' flex-col flex justfy-start text-gray-700'>
+					<label>Message</label>
 					<textarea
-						id='massege'
-						name='massege'
-						rows='4'
-						className='my-3 
-						mx-auto inline-block  flex-1 mr-7 focus:outline-none w-full
-						p-7'
-					></textarea>
-					<input
-						type='submit'
-						className='inline-block md:w-1/4 w-full h-10 mb-4 active:hover:bg-blue-800  active:hover:text-white transition-all delay-75 ease-out 
-						border
-						border-gray-400
-				'
+						className=' shadow-lg bg-gray-100 ring-0 border-0 rounded-lg focus:ring-0 focus:border-0 '
+						name='message'
 					/>
 				</div>
+				<input
+					type='submit'
+					value={loading ? 'sending ..' : 'Send'}
+					className='px-10 py-2 bg-green-500 mt-3 text-white  '
+				/>
 			</form>
-		</section>
+		</div>
 	);
-}
+};
+
+export default Contact;

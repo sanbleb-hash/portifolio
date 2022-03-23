@@ -1,10 +1,10 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { data } from '../data';
 
 const SlideMenu = ({ setIsMobile }) => {
-	const route = useHistory();
+	const route = useNavigate();
 
 	return (
 		<nav className='w-full  text-blue-800 absolute inset-0  '>

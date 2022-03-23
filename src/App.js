@@ -1,33 +1,28 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import HomePage from './HomePage';
 import Portfolio from './Portfolio';
 import Contact from './Contact';
 import NotfoundPage from './NotfoundPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	return (
-		<Router>
+		<>
 			<main className=' w-screen bg-gray-100 text-blue-800 font-genumu'>
 				<NavBar />
-				<Switch>
-					<Route path='/' exact>
-						<HomePage />
-					</Route>
-					<Route path='/portfolio'>
-						<Portfolio />
-					</Route>
-					<Route path='/contact'>
-						<Contact />
-					</Route>
-					<Route path='*'>
-						<NotfoundPage />
-					</Route>
-				</Switch>
+				<Routes>
+					<Route path='/' element={<HomePage />} />
+					<Route path='/portfolio' element={<Portfolio />} />
+					<Route path='/contact' element={<Contact />} />
+					<Route path='*' element={<NotfoundPage />} />
+				</Routes>
 				<Footer />
+				<ToastContainer />
 			</main>
-		</Router>
+		</>
 	);
 }
 

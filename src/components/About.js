@@ -1,9 +1,9 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 export const About = () => {
-	const router = useHistory();
+	const router = useNavigate();
 	return (
 		<section className='  md:mt-10'>
 			<div className=' flex flex-col md:grid md:grid-cols-2'>
