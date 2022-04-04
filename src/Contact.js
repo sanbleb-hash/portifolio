@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
 	const router = useNavigate();
-	const [email, setEmail] = useState('');
+
 	const [loading, setLoading] = useState(false);
 	const form = useRef();
 
@@ -46,8 +46,12 @@ const Contact = () => {
 	};
 
 	return (
-		<div className='pt-14 flex flex-col items-center  justify-center min-h-[80vh]  '>
-			<form ref={form} className='min-w-[300px]' onSubmit={handleSubmit}>
+		<div className='pt-14 flex flex-col items-center  justify-center min-h-[80vh] bg-slate-100   '>
+			<form
+				ref={form}
+				className='min-w-[300px] bg-slate-100 '
+				onSubmit={handleSubmit}
+			>
 				<div className=' flex-col flex justfy-start text-gray-700'>
 					<label>Name</label>
 					<input
